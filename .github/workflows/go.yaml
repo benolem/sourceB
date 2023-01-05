@@ -11,7 +11,7 @@ env:
     REGISTRY_USER: ${{ github.actor }}
     REGISTRY_PASSWORD: ${{ github.token }}
     KUBE_GIT_VERSION: v1.25.5
-    INTEGRATION_STREAM: a
+    INTEGRATION_STREAM: b
     
 jobs:
 
