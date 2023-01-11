@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # - name: Upload complementary images to GHCR
+    # - name: Upload docker.io images to GHCR
     #   run: |
     #     echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
     #     export LIST='
@@ -33,6 +33,10 @@ jobs:
     #       docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
     #     done
     #     docker images
+
+    # - name: Upload registry.k8s.i images to GHCR
+    #   run: |
+    #     echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
     #     export LIST='
     #       pause:3.7
     #       dns/k8s-dns-node-cache:1.21.1
