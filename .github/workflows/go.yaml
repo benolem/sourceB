@@ -28,8 +28,8 @@ jobs:
         '
         for IMAGE in $LIST
         do
-          docker pull registry.k8s.io/$IMAGE
-          docker tag registry.k8s.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+          docker pull docker.io/$IMAGE
+          docker tag docker.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
           docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
         done
         docker images
@@ -43,6 +43,12 @@ jobs:
         #   metrics-server/metrics-server:v0.6.2
         #   docker.io/library/nginx:1.23.2-alpine
         # '
+        # for IMAGE in $LIST
+        # do
+        #   docker pull registry.k8s.io/$IMAGE
+        #   docker tag registry.k8s.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+        #   docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+        # done
 
 
     # - name: Create Github Release
