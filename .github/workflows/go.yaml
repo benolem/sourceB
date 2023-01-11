@@ -20,35 +20,32 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Upload complementary images to GHCR
-      run: |
-        echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
-        export LIST='
-          library/nginx:1.23.2-alpine
-        '
-        for IMAGE in $LIST
-        do
-          docker pull docker.io/$IMAGE
-          docker tag docker.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-          docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-        done
-        docker images
-
-
-        # export LIST='
-        #   pause:3.7
-        #   dns/k8s-dns-node-cache:1.21.1
-        #   coredns/coredns:v1.9.3
-        #   cpa/cluster-proportional-autoscaler-amd64:1.8.5
-        #   metrics-server/metrics-server:v0.6.2
-        #   docker.io/library/nginx:1.23.2-alpine
-        # '
-        # for IMAGE in $LIST
-        # do
-        #   docker pull registry.k8s.io/$IMAGE
-        #   docker tag registry.k8s.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-        #   docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-        # done
+    # - name: Upload complementary images to GHCR
+    #   run: |
+    #     echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
+    #     export LIST='
+    #       library/nginx:1.23.2-alpine
+    #     '
+    #     for IMAGE in $LIST
+    #     do
+    #       docker pull docker.io/$IMAGE
+    #       docker tag docker.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #       docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #     done
+    #     docker images
+    #     export LIST='
+    #       pause:3.7
+    #       dns/k8s-dns-node-cache:1.21.1
+    #       coredns/coredns:v1.9.3
+    #       cpa/cluster-proportional-autoscaler-amd64:1.8.5
+    #       metrics-server/metrics-server:v0.6.2
+    #     '
+    #     for IMAGE in $LIST
+    #     do
+    #       docker pull registry.k8s.io/$IMAGE
+    #       docker tag registry.k8s.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #       docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #     done
 
 
     # - name: Create Github Release
