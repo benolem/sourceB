@@ -24,11 +24,7 @@ jobs:
       run: |
         echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
         export LIST='
-          pause:3.7
-          dns/k8s-dns-node-cache:1.21.1
-          coredns/coredns:v1.9.3
-          cpa/cluster-proportional-autoscaler-amd64:1.8.5
-          metrics-server/metrics-server:v0.6.2
+          library/nginx:1.23.2-alpine
         '
         for IMAGE in $LIST
         do
@@ -37,6 +33,17 @@ jobs:
           docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
         done
         docker images
+
+
+        # export LIST='
+        #   pause:3.7
+        #   dns/k8s-dns-node-cache:1.21.1
+        #   coredns/coredns:v1.9.3
+        #   cpa/cluster-proportional-autoscaler-amd64:1.8.5
+        #   metrics-server/metrics-server:v0.6.2
+        #   docker.io/library/nginx:1.23.2-alpine
+        # '
+
 
     # - name: Create Github Release
     #   id: create_release
