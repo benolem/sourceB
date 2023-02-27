@@ -38,7 +38,7 @@ jobs:
       run: |
         echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
         export LIST='
-          pause:3.8
+          dns/k8s-dns-node-cache:1.22.18
         '
         for IMAGE in $LIST
         do
@@ -48,7 +48,7 @@ jobs:
         done
 
         # export LIST='
-        #   pause:3.7
+        #   pause:3.8
         #   dns/k8s-dns-node-cache:1.21.1
         #   coredns/coredns:v1.9.3
         #   cpa/cluster-proportional-autoscaler-amd64:1.8.5
