@@ -9,8 +9,8 @@ on:
 env:
     IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
     REGISTRY_USER: ${{ github.actor }}
-    REGISTRY_PASSWORD: ${{ github.token }}
-    KUBE_GIT_VERSION: v1.26.2
+    REGISTRY_PASSWORD: ${{github.token }}
+    KUBE_GIT_VERSION: v1.28.5
     INTEGRATION_STREAM: b
     
 jobs:
@@ -20,26 +20,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Upload docker.io images to GHCR
-      run: |
-        echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
-        export LIST='
-          library/nginx:1.25.2-alpine
-        '
-        for IMAGE in $LIST
-        do
-          docker pull docker.io/$IMAGE
-          docker tag docker.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-          docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
-        done
-        docker images
+    # - name: Upload docker.io images to GHCR
+    #   run: |
+    #     echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
+    #     export LIST='
+    #       library/nginx:1.25.2-alpine
+    #     '
+    #     for IMAGE in $LIST
+    #     do
+    #       docker pull docker.io/$IMAGE
+    #       docker tag docker.io/$IMAGE $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #       docker push $IMAGE_REGISTRY/$INTEGRATION_STREAM/$IMAGE
+    #     done
+    #     docker images
 
     - name: Upload registry.k8s.i images to GHCR
       run: |
         echo $REGISTRY_PASSWORD | docker login $IMAGE_REGISTRY -u $REGISTRY_USER --password-stdin 
         export LIST='
-          dns/k8s-dns-node-cache:1.22.20
-          metrics-server/metrics-server:v0.6.4
+          dns/k8s-dns-node-cache:1.22.28
+          coredns/coredns:v1.10.1
         '
         for IMAGE in $LIST
         do
@@ -50,23 +50,23 @@ jobs:
 
         # export LIST='
         #   pause:3.9
-        #   dns/k8s-dns-node-cache:1.22.18
-        #   coredns/coredns:v1.9.3
+        #   dns/k8s-dns-node-cache:1.22.28
+        #   coredns/coredns:v1.10.1
         #   cpa/cluster-proportional-autoscaler:v1.8.8
         #   metrics-server/metrics-server:v0.6.4
         # '
 
 
-    # - name: Create Github Release
-    #   id: create_release
-    #   uses: actions/create-release@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     tag_name: ${{ env.KUBE_GIT_VERSION }}
-    #     release_name: Release ${{ env.KUBE_GIT_VERSION }}
-    #     draft: false
-    #     prerelease: false
+    - name: Create Github Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.KUBE_GIT_VERSION }}
+        release_name: Release ${{ env.KUBE_GIT_VERSION }}
+        draft: false
+        prerelease: false
 
-    # - name: Get GitHub Release URL
-    #   run: echo ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+    - name: Get GitHub Release URL
+      run: echo ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
